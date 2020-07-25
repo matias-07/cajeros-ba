@@ -1,0 +1,17 @@
+{
+  "name": "cajeros",
+  "version": "1.0.0",
+  "description": "Una API para encontrar cajeros automáticos cercanos",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matías Huenul",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parser": "^2.3.3",
+    "express": "^4.17.1"
+  }
+}
