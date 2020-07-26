@@ -4,12 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/>
     <link rel="stylesheet" href="index.css">
     <title>Cajeros</title>
   </head>
   <body>
-    <div class="container container-xs">
-        <h1 class="text-center">Cajeros</h1>
+    <div class="container">
+    <div class="container mt-4">
+        <div id="header" class="mb-4">
+          <h1 class="text-center">Cajeros</h1>
+          <h5 class="text-center">Buscá cajeros automáticos cercanos en la Ciudad de Buenos Aires</h5>
+        </div>
         <form>
             <div class="form-group">
                 <label for="red">Red</label>
@@ -27,14 +32,21 @@
               <input type="number" step="any" class="form-control" id="longitud">
             </div>
             <div class="btn-toolbar toolbar-flex">
-                <button class="btn btn-light">Autocompletar localización</button>
-                <button type="button" class="btn btn-primary" onclick="buscarCajeros()">Buscar</button>
+                <button class="btn btn-light" id="obtener-geolocation" onclick="obtenerGeolocation(event)">
+                  Autocompletar localización
+                </button>
+                <button type="button" class="btn btn-primary" onclick="submitHandler()">Buscar</button>
             </div>
           </form>
     </div>
+    <div class="container mt-5 mb-5" id="resultados">
+      <div id="mapa" class="container"></div>
+    </div>
+  </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <script src="index.js"></script>
   </body>
 </html>

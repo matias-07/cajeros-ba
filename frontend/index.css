@@ -2,3 +2,20 @@
     display: flex;
     justify-content: space-between;
 }
+
+#header {
+    color: white;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("cajero_automatico.jpg");
+    background-size: cover;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: .25rem;
+}
+
+#mapa {
+    border-radius: .25rem;
+    height: 400px;
+}

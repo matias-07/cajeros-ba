@@ -6,12 +6,14 @@ function Cajero(atributos) {
     this.red = atributos["red"];
     this.banco = atributos["banco"];
     this.direccion = atributos["ubicacion"];
-    this.distanciaA = (longitud, latitud) => {
+    this.distanciaA = (latitud, longitud) => {
         const R = 6371;
         const deltaLatitud = (this.latitud - latitud) * (Math.PI / 180);
         const deltaLongitud = (this.longitud - longitud) * (Math.PI / 180);
+        const latitud1 = this.latitud * (Math.PI / 180);
+        const latitud2 = latitud * (Math.PI / 180);
         const a = Math.sin(deltaLatitud / 2) ** 2
-            + Math.cos(this.latitud) * Math.cos(latitud) * (Math.sin(deltaLongitud / 2) ** 2);
+            + Math.cos(latitud1) * Math.cos(latitud2) * (Math.sin(deltaLongitud / 2) ** 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c * 1000;
     };
@@ -36,7 +38,7 @@ module.exports = {
     },
     obtenerMasCercanos: async function(latitud, longitud, red, cantidad, maximaDistancia) {
         cantidad = cantidad || 3;
-        maximaDistancia = maximaDistancia || 500;
+        maximaDistancia = maximaDistancia || 1500; // cambiar a 500
         const cajeros = await this.obtenerPorRed(red);
         return cajeros
             .filter(cajero => cajero.distanciaA(latitud, longitud) < maximaDistancia)

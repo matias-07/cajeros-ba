@@ -15,6 +15,8 @@ app.use(json());
 app.get("/cajeros", async (req, res) => {
     const {red, latitud, longitud} = req.query;
     const errores = {};
+    console.log(latitud);
+    console.log(Number(latitud));
 
     if (!red) {
         errores["red"] = errorValorRequerido;
