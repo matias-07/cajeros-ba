@@ -13,10 +13,10 @@ function ErrorMessage(message) {
     return element;
 }
 
-function NoResultsMessage() {
+function Message(type, message) {
     const element = document.createElement("div");
-    element.className = "alert alert-info collapse";
-    element.textContent = "No se encontraron resultados";
+    element.className = `alert alert-${type} collapse`;
+    element.textContent = message;
     element.setAttribute("role", "alert");
     return element;
 }

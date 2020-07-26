@@ -12,32 +12,40 @@ function clearResults() {
     document.getElementById("resultados").innerHTML = "";
 }
 
-function createMap(container, coordinates) {
+function createMap(container, locations) {
     const map = L.map(container);
+
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    const locations = coordinates.map(x => L.latLng(x[0], x[1]));
+
     for (const location of locations) {
-        L.marker(location).addTo(map);
+        L.marker(L.latLng(location["latitud"], location["longitud"]), {
+            title: `${location["banco"]}\n${location["direccion"]}`
+        }).addTo(map);
     }
-    map.setView(locations[0], 14);
-};
+
+    map.setView(L.latLng(locations[0]["latitud"], locations[0]["longitud"]), 14);
+}
+
+function showMessage(parent, type, text) {
+    const message = Message(type, text);
+    parent.appendChild(message);
+    $(message).collapse();
+}
 
 function showResults(results) {
     const resultsContainer = document.getElementById("resultados");
 
     if (results.length === 0) {
-        const message = NoResultsMessage();
-        resultsContainer.appendChild(message);
-        return $(message).collapse();
+        showMessage(resultsContainer, "info", "No se encontraron resultados");
+        return;
     }
 
     const map = MapContainer();
     resultsContainer.appendChild(map);
 
-    const coordinates = results.map(r => [r["latitud"], r["longitud"]]);
-    createMap(map, coordinates);
+    createMap(map, results);
     scrollTo(0, map.offsetTop);
 }
 
@@ -69,6 +77,7 @@ function search(token) {
 
 function getGeolocation(event) {
     event.preventDefault();
+    clearResults();
     const geoLocationButton = event.target;
     const buttonInnerHTML = geoLocationButton.innerHTML;
 
@@ -81,6 +90,14 @@ function getGeolocation(event) {
         document.getElementById("longitud").value = position.coords.longitude;        
         geoLocationButton.innerHTML = buttonInnerHTML;
         geoLocationButton.blur();
+    }, () => {
+        geoLocationButton.innerHTML = buttonInnerHTML;
+        geoLocationButton.blur();
+        showMessage(
+            document.getElementById("resultados"),
+            "danger",
+            "No se pudo obtener la localización"
+        );
     });
 }
 
