@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .toolbar-flex {
     display: flex;
     justify-content: space-between;
@@ -5,7 +9,7 @@
 
 #header {
     color: white;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("cajero_automatico.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("../images/cajero_automatico.jpg");
     background-size: cover;
     height: 200px;
     display: flex;
@@ -15,7 +19,7 @@
     border-radius: .25rem;
 }
 
-#mapa {
+#map {
     border-radius: .25rem;
     height: 400px;
 }
