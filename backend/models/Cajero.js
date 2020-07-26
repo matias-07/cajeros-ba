@@ -1,4 +1,5 @@
-const leerCSV = require("./lectorCSV");
+const csvReader = require("../utils/CSVReader");
+const archivo = "./data/cajeros-automaticos.csv";
 
 function Cajero(atributos) {
     this.longitud = Number(atributos["long"]);
@@ -6,7 +7,7 @@ function Cajero(atributos) {
     this.red = atributos["red"];
     this.banco = atributos["banco"];
     this.direccion = atributos["ubicacion"];
-    this.distanciaA = (latitud, longitud) => {
+    this.distanceTo = (latitud, longitud) => {
         const R = 6371;
         const deltaLatitud = (this.latitud - latitud) * (Math.PI / 180);
         const deltaLongitud = (this.longitud - longitud) * (Math.PI / 180);
@@ -20,7 +21,7 @@ function Cajero(atributos) {
 }
 
 module.exports = {
-    archivo: "./cajeros-automaticos.csv",
+    archivo: archivo,
     cajeros: null,
     constructor: function(atributos) {
         return new Cajero(atributos);
@@ -29,7 +30,7 @@ module.exports = {
         if (this.cajeros) {
             return this.cajeros;
         }
-        const cajeros = await leerCSV(this.archivo);
+        const cajeros = await csvReader(this.archivo);
         return cajeros.map(this.constructor);
     },
     obtenerPorRed: async function(red) {
@@ -41,8 +42,8 @@ module.exports = {
         maximaDistancia = maximaDistancia || 1500; // cambiar a 500
         const cajeros = await this.obtenerPorRed(red);
         return cajeros
-            .filter(cajero => cajero.distanciaA(latitud, longitud) < maximaDistancia)
-            .sort((a, b) => a.distanciaA(latitud, longitud) - b.distanciaA(latitud, longitud))
+            .filter(cajero => cajero.distanceTo(latitud, longitud) < maximaDistancia)
+            .sort((a, b) => a.distanceTo(latitud, longitud) - b.distanceTo(latitud, longitud))
             .slice(0, cantidad);
     }
 };
