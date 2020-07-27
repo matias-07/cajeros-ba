@@ -1,7 +1,7 @@
 {
   "name": "cajeros",
   "version": "1.0.0",
-  "description": "",
+  "description": "Página web para visualizar en un mapa cajeros automáticos cercanos",
   "scripts": {
     "start": "http-server"
   },
