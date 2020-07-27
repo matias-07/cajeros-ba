@@ -1,8 +1,10 @@
+const reCaptchaKey = "6LeKN7YZAAAAANZxiEUV3KleUGELLQocOFRrHJIx";
+
 function clearErrors() {
     for (const element of document.querySelectorAll(".is-invalid")) {
         element.classList.remove("is-invalid");
     }
-    
+
     for (const element of document.querySelectorAll(".text-danger")) {
         element.remove();
     }
@@ -51,9 +53,17 @@ function showResults(results) {
 
 function showErrors(errors) {
     for (const key in errors) {
-        const field = document.getElementById(key);
-        field.classList.add("is-invalid");
-        field.after(ErrorMessage(errors[key]));
+        if (key === "captcha") {
+            showMessage(
+                document.getElementById("resultados"),
+                "danger",
+                errors[key]
+            );
+        } else {
+            const field = document.getElementById(key);
+            field.classList.add("is-invalid");
+            field.after(ErrorMessage(errors[key]));
+        }
     }
 }
 
@@ -65,14 +75,9 @@ function search(token) {
         captcha: token
     };
 
-    fetch("http://localhost:3000/cajeros?" + $.param(data))
-        .then(response => {
-            const json = response.json();
-            if (!response["ok"]) {
-                return json.then(errors => showErrors(errors));
-            }
-            return json.then(results => showResults(results));
-        });
+    axios.get("http://localhost:3000/cajeros", {params: data})
+        .then(response => showResults(response.data))
+        .catch(error => showErrors(error.response.data));
 }
 
 function getGeolocation(event) {
@@ -81,9 +86,8 @@ function getGeolocation(event) {
     const geoLocationButton = event.target;
     const buttonInnerHTML = geoLocationButton.innerHTML;
 
-    geoLocationButton.innerHTML = "";
+    geoLocationButton.textContent = "Obteniendo localización...";
     geoLocationButton.appendChild(Spinner());
-    geoLocationButton.innerHTML += "Obteniendo localización...";
 
     navigator.geolocation.getCurrentPosition((position) => {
         document.getElementById("latitud").value = position.coords.latitude;
@@ -105,7 +109,7 @@ function onSubmit(event) {
     event.preventDefault();
     grecaptcha.ready(() => {
         grecaptcha.execute(
-            '6LeKN7YZAAAAANZxiEUV3KleUGELLQocOFRrHJIx',
+            reCaptchaKey,
             {action: 'submit'}
         ).then(token => {
             clearResults();

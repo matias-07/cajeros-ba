@@ -1,6 +1,6 @@
 function Spinner() {
     const element = document.createElement("span");
-    element.className = "spinner-border spinner-border-sm mr-2";
+    element.className = "spinner-border spinner-border-sm ml-2";
     element.setAttribute("role", "status");
     element.setAttribute("aria-hidden", "true");
     return element;
