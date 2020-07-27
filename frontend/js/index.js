@@ -16,18 +16,29 @@ function clearResults() {
 
 function createMap(container, locations) {
     const map = L.map(container);
+    let centerLatitude = 0;
+    let centerLongitude = 0;
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     for (const location of locations) {
-        L.marker(L.latLng(location["latitud"], location["longitud"]), {
+        const latitude = location["latitud"];
+        const longitude = location["longitud"];
+
+        L.marker(L.latLng(latitude, longitude), {
             title: `${location["banco"]}\n${location["direccion"]}`
         }).addTo(map);
+
+        centerLatitude += latitude;
+        centerLongitude += longitude;
     }
 
-    map.setView(L.latLng(locations[0]["latitud"], locations[0]["longitud"]), 14);
+    centerLatitude /= locations.length;
+    centerLongitude /= locations.length;
+
+    map.setView(L.latLng(centerLatitude, centerLongitude), 16);
 }
 
 function showMessage(parent, type, text) {
