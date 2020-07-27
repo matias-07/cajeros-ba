@@ -49,9 +49,8 @@ router.get("/", reCaptcha, async (req, res) => {
             })
         );
     } catch (error) {
-        console.log(error);
         res.status(500).json({
-            mensaje: serverError
+            server: serverError
         });
     }
 });

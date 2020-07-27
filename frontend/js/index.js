@@ -64,7 +64,7 @@ function showResults(results) {
 
 function showErrors(errors) {
     for (const key in errors) {
-        if (key === "captcha") {
+        if (key === "captcha" || key === "server") {
             showMessage(
                 document.getElementById("resultados"),
                 "danger",
