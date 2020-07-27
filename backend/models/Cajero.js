@@ -39,7 +39,7 @@ module.exports = {
     },
     obtenerMasCercanos: async function(latitud, longitud, red, cantidad, maximaDistancia) {
         cantidad = cantidad || 3;
-        maximaDistancia = maximaDistancia || 1500; // cambiar a 500
+        maximaDistancia = maximaDistancia || 500;
         const cajeros = await this.obtenerPorRed(red);
         return cajeros
             .filter(cajero => cajero.distanceTo(latitud, longitud) < maximaDistancia)
