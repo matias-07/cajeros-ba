@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     }, (error, response, body) => {
         if (error || body["score"] < 0.4) {
             res.status(400).json({
-                "error": "Falló la verificación de captcha"
+                captcha: "Falló la verificación de captcha"
             });
         } else {
             next();

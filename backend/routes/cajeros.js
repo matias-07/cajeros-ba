@@ -8,7 +8,7 @@ const errorValorRequerido = "Valor requerido";
 const errorValorNoNumerico = "El valor debe ser numérico";
 const serverError = "Ha ocurrido un error";
 
-router.get("/", async (req, res) => {
+router.get("/", reCaptcha, async (req, res) => {
     const {red, latitud, longitud} = req.query;
     const errores = {};
 
