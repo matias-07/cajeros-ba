@@ -1,4 +1,4 @@
-const reCaptchaKey = "6LeKN7YZAAAAANZxiEUV3KleUGELLQocOFRrHJIx";
+const reCaptchaKey = "6LfKqb8ZAAAAAPGx2Wlib3Ol9paV-HG_3ggQ7Ma9";
 
 function clearErrors() {
     for (const element of document.querySelectorAll(".is-invalid")) {

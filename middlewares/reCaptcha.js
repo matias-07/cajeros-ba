@@ -1,7 +1,10 @@
 const request = require("request");
-const reCaptchaSecret = "6LeKN7YZAAAAAEF48bsqj70Zy58cQfLaTPyjm0oB";
+const reCaptchaSecret = process.env.RECAPTCHA_SECRET;
 
 module.exports = (req, res, next) => {
+    if (!reCaptchaSecret) {
+        return next();
+    }
     request.post("https://www.google.com/recaptcha/api/siteverify", {
         form: {
             secret: reCaptchaSecret,
